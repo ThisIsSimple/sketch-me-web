@@ -18,3 +18,7 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SKETCH_ME_KHU }}
           channelId: live
           projectId: sketch-me-khu
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_AI_SERVER_URL: ${{ secrets.VITE_AI_SERVER_URL }}
