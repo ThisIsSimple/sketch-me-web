@@ -16,7 +16,6 @@ export const ResultPage = observer(() => {
     Database["public"]["Tables"]["games"]["Row"] | null
   >(null);
 
-  const [signCompleted, setSignCompleted] = useState(false);
   const isJustEnded = useMemo(
     () => (gameStore.game ? game?.signature?.length <= 0 : false),
     [gameStore.game, game],
@@ -39,7 +38,6 @@ export const ResultPage = observer(() => {
   const handleSignComplete = () => {
     if (!gameId) return;
 
-    setSignCompleted(true);
     loadData(gameId);
   };
 

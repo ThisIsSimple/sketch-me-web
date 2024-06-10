@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GameLoading } from "../components/game-loading";
 import { appStore } from "../stores/app-store";
 import { runInAction } from "mobx";
+import { FaRedo } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 export const GamePage = observer(() => {
@@ -39,6 +40,11 @@ export const GamePage = observer(() => {
     }
   };
 
+  const handleReset = () => {
+    if (!canvasRef.current) return;
+    canvasRef.current.clear();
+  };
+
   if (gameStore.loading) return <GameLoading />;
 
   return (
@@ -47,7 +53,7 @@ export const GamePage = observer(() => {
         <SubjectDisplay />
       </header>
 
-      <div className="w-fit h-fit border">
+      <div className="w-fit h-fit border relative">
         <CanvasDraw
           ref={canvasRef}
           hideGrid
@@ -57,6 +63,12 @@ export const GamePage = observer(() => {
           brushColor="#000"
           lazyRadius={0}
         />
+        <button
+          onClick={handleReset}
+          className="w-12 h-12 rounded-full flex justify-center items-center bg-white shadow-lg hover:shadow-xl transition-shadow absolute left-4 bottom-4"
+        >
+          <FaRedo />
+        </button>
       </div>
 
       <button

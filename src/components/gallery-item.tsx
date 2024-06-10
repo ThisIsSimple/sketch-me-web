@@ -18,7 +18,9 @@ export const GalleryItem = ({ game }: { game: GalleryType }) => {
           </div>
         ) : null}
       </div>
-      <div className="bg-white px-3 py-1 shadow-sm">{subject}</div>
+      <div className="z-10 rounded-lg bg-white px-3 py-1 border border-gray-600 border-opacity-10 shadow-sm relative -top-9">
+        {subject}
+      </div>
     </div>
   );
 };

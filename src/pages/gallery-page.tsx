@@ -3,6 +3,7 @@ import supabase from "../utils/supabase";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { GalleryItem, GalleryType } from "../components/gallery-item";
+import { FloatingBack } from "../components/floating-back";
 
 export const GalleryPage = () => {
   const navigate = useNavigate();
@@ -26,17 +27,18 @@ export const GalleryPage = () => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-x-5 gap-y-10 p-5">
+      <div className="grid grid-cols-2 gap-x-5 gap-y-1 p-5">
         {games.map((game) => (
-          <GalleryItem key={game.id} game={game} />
+          <div
+            key={game.id}
+            onClick={() => navigate(`/gallery/${game.id}`)}
+            className="cursor-pointer"
+          >
+            <GalleryItem game={game} />
+          </div>
         ))}
       </div>
-      <button
-        onClick={() => navigate("/")}
-        className="w-16 h-16 rounded-full shadow-lg hover:shadow-xl transition-shadow fixed bottom-4 left-4 bg-orange-500 text-white flex flex-col justify-center items-center gap-0.5"
-      >
-        <IoMdArrowRoundBack size={32} />
-      </button>
+      <FloatingBack />
     </>
   );
 };

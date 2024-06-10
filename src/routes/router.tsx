@@ -5,6 +5,7 @@ import { TitlePage } from "../pages/title-page";
 import { LobbyPage } from "../pages/lobby-page";
 import { ResultPage } from "../pages/result-page";
 import { GalleryPage } from "../pages/gallery-page";
+import { GalleryDetailPage } from "../pages/gallery-detail-page";
 
 export const Router = () => {
   return (
@@ -16,6 +17,7 @@ export const Router = () => {
           <Route path="/game/:gameId" element={<GamePage />} />
           <Route path="/result/:gameId" element={<ResultPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/gallery/:galleryId" element={<GalleryDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
