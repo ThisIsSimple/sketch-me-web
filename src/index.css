@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.image-frame {
+    padding: 15px;
+    border: 15px solid #fff;
+    background-color: #eee;
+    float: left;
+    transition: all 0.8s;
+    box-shadow:
+        inset 1px 1px 3px rgba(0, 0, 0, 0.5),
+        1px 1px 2px rgba(0, 0, 0, 0.2),
+        3px 25px 55px -1px rgba(0, 0, 0, 0.5),
+        -25px -25px 80px -15px rgba(255, 255, 255, 0.9);
+}
+
+.image-frame:hover {
+}

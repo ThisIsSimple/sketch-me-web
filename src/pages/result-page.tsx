@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Database } from "../types/supabase";
 import supabase from "../utils/supabase";
 import { GameLoading } from "../components/game-loading";
 import { ResultModal } from "../components/result-modal";
+import { observer } from "mobx-react-lite";
+import { gameStore } from "../stores/game-store";
+import { SignatureModal } from "../components/signature-modal";
 
-export const ResultPage = () => {
+export const ResultPage = observer(() => {
   const navigate = useNavigate();
   const { gameId } = useParams();
 
@@ -13,24 +16,43 @@ export const ResultPage = () => {
     Database["public"]["Tables"]["games"]["Row"] | null
   >(null);
 
+  const [signCompleted, setSignCompleted] = useState(false);
+  const isJustEnded = useMemo(
+    () => (gameStore.game ? game?.signature?.length <= 0 : false),
+    [gameStore.game, game],
+  );
+
+  const loadData = (gameId: string) => {
+    supabase
+      .from("games")
+      .select("*, signature:signatures(*)")
+      .eq("id", gameId)
+      .single()
+      .then(({ data }) => {
+        console.log(data);
+        if (data) {
+          setGame(data);
+        }
+      });
+  };
+
+  const handleSignComplete = () => {
+    if (!gameId) return;
+
+    setSignCompleted(true);
+    loadData(gameId);
+  };
+
   useEffect(() => {
-    if (gameId) {
-      supabase
-        .from("games")
-        .select("*")
-        .eq("id", gameId)
-        .then(({ data, error }) => {
-          if (data) {
-            setGame(data[0]);
-          }
-        });
-    }
+    if (gameId) loadData(gameId);
   }, [gameId]);
 
   const [showResultModal, setShowResultModal] = useState(false);
   const showResult = () => {
     setShowResultModal(true);
   };
+
+  const [showSignatureModal, setShowSignatureModal] = useState(false);
 
   if (!game) return <GameLoading />;
 
@@ -41,7 +63,26 @@ export const ResultPage = () => {
           내가 그린 '{game.subject}'
         </h1>
       </header>
-      <img src={game.image} className="w-full border" />
+
+      <div className="relative">
+        <img src={game.image} className="w-full border" />
+
+        {game.signature?.length > 0 ? (
+          <img
+            src={game.signature[0].image}
+            className="w-1/3 absolute bottom-5 right-5"
+          />
+        ) : null}
+
+        {isJustEnded ? (
+          <button
+            onClick={() => setShowSignatureModal(true)}
+            className="absolute bottom-4 right-4 px-2 py-0.5 rounded-lg bg-white shadow-sm border text-sm font-bold"
+          >
+            서명하기
+          </button>
+        ) : null}
+      </div>
 
       <div className="space-y-4">
         <button
@@ -61,6 +102,13 @@ export const ResultPage = () => {
       {showResultModal ? (
         <ResultModal onClose={() => setShowResultModal(false)} game={game} />
       ) : null}
+
+      {showSignatureModal ? (
+        <SignatureModal
+          onClose={() => setShowSignatureModal(false)}
+          onSignComplete={handleSignComplete}
+        />
+      ) : null}
     </div>
   );
-};
+});

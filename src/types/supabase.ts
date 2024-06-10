@@ -18,6 +18,7 @@ export type Database = {
           percentage: number | null
           predicted_label: string | null
           prediction: Json | null
+          signature: string | null
           status: Database["public"]["Enums"]["GAME_STATUS"]
           subject: string
         }
@@ -29,6 +30,7 @@ export type Database = {
           percentage?: number | null
           predicted_label?: string | null
           prediction?: Json | null
+          signature?: string | null
           status?: Database["public"]["Enums"]["GAME_STATUS"]
           subject: string
         }
@@ -40,10 +42,40 @@ export type Database = {
           percentage?: number | null
           predicted_label?: string | null
           prediction?: Json | null
+          signature?: string | null
           status?: Database["public"]["Enums"]["GAME_STATUS"]
           subject?: string
         }
         Relationships: []
+      }
+      signatures: {
+        Row: {
+          created_at: string
+          game_id: number
+          id: number
+          image: string
+        }
+        Insert: {
+          created_at?: string
+          game_id: number
+          id?: number
+          image: string
+        }
+        Update: {
+          created_at?: string
+          game_id?: number
+          id?: number
+          image?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "signatures_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

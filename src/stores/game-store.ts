@@ -122,7 +122,7 @@ class GameStore {
     }
 
     // update game status
-    await supabase
+    const { data: updatedGame } = await supabase
       .from("games")
       .update({
         image: publicUrl,
@@ -132,7 +132,10 @@ class GameStore {
         prediction: prediction.data.predictions,
         percentage: prediction.data.percentage * 100,
       })
-      .eq("id", this.game.id);
+      .eq("id", this.game.id)
+      .select()
+      .single();
+    this.game = updatedGame;
   }
 
   reset() {

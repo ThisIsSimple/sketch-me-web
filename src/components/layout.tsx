@@ -15,7 +15,7 @@ export const Layout = () => {
   }, [error]);
 
   return (
-    <div className="max-w-[500px] mx-auto h-screen flex flex-col items-center justify-center">
+    <div className="max-w-[500px] mx-auto w-full relative min-h-screen flex flex-col items-center justify-center">
       <Outlet />
     </div>
   );
