@@ -15,6 +15,7 @@ export type Database = {
           id: number
           image: string | null
           is_correct: boolean
+          percentage: number | null
           predicted_label: string | null
           prediction: Json | null
           status: Database["public"]["Enums"]["GAME_STATUS"]
@@ -25,6 +26,7 @@ export type Database = {
           id?: number
           image?: string | null
           is_correct?: boolean
+          percentage?: number | null
           predicted_label?: string | null
           prediction?: Json | null
           status?: Database["public"]["Enums"]["GAME_STATUS"]
@@ -35,6 +37,7 @@ export type Database = {
           id?: number
           image?: string | null
           is_correct?: boolean
+          percentage?: number | null
           predicted_label?: string | null
           prediction?: Json | null
           status?: Database["public"]["Enums"]["GAME_STATUS"]

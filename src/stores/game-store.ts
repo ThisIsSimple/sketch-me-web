@@ -113,8 +113,6 @@ class GameStore {
       url: publicUrl,
     });
 
-    console.log(prediction.data);
-
     let is_correct = false;
 
     // Check Result
@@ -132,6 +130,7 @@ class GameStore {
         is_correct,
         predicted_label: prediction.data.label,
         prediction: prediction.data.predictions,
+        percentage: prediction.data.percentage * 100,
       })
       .eq("id", this.game.id);
   }
