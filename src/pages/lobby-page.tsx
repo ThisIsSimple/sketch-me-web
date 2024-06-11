@@ -11,12 +11,12 @@ export const LobbyPage = observer(() => {
   const createNewGameAndNavigate = async () => {
     const gameId = await gameStore.createNewGame();
     toast("게임을 시작합니다!");
-    navigate("/game/" + gameId);
+    navigate("/game/" + gameId, { replace: true });
   };
 
   useEffect(() => {
     if (gameStore.game) {
-      navigate("/game/" + gameStore.game.id);
+      navigate("/game/" + gameStore.game.id, { replace: true });
     } else createNewGameAndNavigate();
   }, [gameStore.game]);
 
